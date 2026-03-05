@@ -5,7 +5,6 @@ const { Server } = require('socket.io');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const socketHandler = require('./socket/socketHandler');
-
 const authRoutes = require('./routes/authRoutes');
 const groupRoutes = require('./routes/groupRoutes');
 const messageRoutes = require('./routes/messageRoutes');
@@ -15,7 +14,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: process.env.CLIENT_URL,
+    origin: process.env.CLIENT_URL || '*',
     methods: ['GET', 'POST'],
     credentials: true,
   },
@@ -24,7 +23,7 @@ const io = new Server(server, {
 app.set('io', io);
 
 app.use(cors({
-  origin: process.env.CLIENT_URL,
+  origin: process.env.CLIENT_URL || '*',
   credentials: true,
 }));
 app.use(express.json());
@@ -57,3 +56,13 @@ server.listen(PORT, () => {
   console.log(`📡 Socket.io ready`);
   console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
 });
+```
+Click **"Commit changes"** ✅
+
+---
+
+### Step 2 — Fix `package.json` name on GitHub
+
+Go to:
+```
+https://github.com/amirrazarangrez56-del/backend/blob/main/package.json
