@@ -18,11 +18,16 @@ const server = http.createServer(app);
 // ── Socket.io Setup ──────────────────────────────────────────
 const io = new Server(server, {
   cors: {
-    origin: process.env.CLIENT_URL || 'http://localhost:5173',
+    origin: process.env.CLIENT_URL,
     methods: ['GET', 'POST'],
     credentials: true,
   },
 });
+
+app.use(cors({
+  origin: process.env.CLIENT_URL,
+  credentials: true,
+}));
 
 // Make io accessible in controllers (for emitting from REST endpoints)
 app.set('io', io);
